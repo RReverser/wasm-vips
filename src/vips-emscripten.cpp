@@ -431,7 +431,7 @@ EMSCRIPTEN_BINDINGS(my_module) {
                  return major + "." + minor + "." + patch;
              }));
     function("config", optional_override([]() {
-                 return vips::replace_all(VIPS_CONFIG, ", ", "\n");
+                 return std::string(VIPS_CONFIG);
              }));
     function("blockUntrusted", optional_override([](bool state) {
                 vips_block_untrusted_set(state ? 1 : 0);

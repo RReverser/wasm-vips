@@ -22,7 +22,7 @@ diff --git a/libvips/foreign/jxlsave.c b/libvips/foreign/jxlsave.c
 index 1111111..2222222 100644
 --- a/libvips/foreign/jxlsave.c
 +++ b/libvips/foreign/jxlsave.c
-@@ -257,7 +257,7 @@ vips_foreign_save_jxl_build( VipsObject *object )
+@@ -253,7 +253,7 @@ vips_foreign_save_jxl_build( VipsObject *object )
  		jxl->lossless = TRUE;
  
  	jxl->runner = JxlThreadParallelRunnerCreate( NULL, 

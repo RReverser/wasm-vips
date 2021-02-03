@@ -9,7 +9,7 @@ diff --git a/libvips/meson.build b/libvips/meson.build
 index 1111111..2222222 100644
 --- a/libvips/meson.build
 +++ b/libvips/meson.build
-@@ -79,11 +79,25 @@ if ['darwin', 'ios'].contains(host_os)
+@@ -128,11 +128,25 @@ if ['darwin', 'ios'].contains(host_os)
    module_suffix = 'so'
  endif
  
@@ -35,7 +35,7 @@ index 1111111..2222222 100644
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, magick_dep],
-@@ -96,6 +110,8 @@ if libjxl_module
+@@ -145,6 +159,8 @@ if libjxl_module
      shared_module('vips-jxl',
          'module/jxl.c',
          jpeg_xl_module_sources,
@@ -44,7 +44,7 @@ index 1111111..2222222 100644
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libjxl_dep, libjxl_threads_dep],
-@@ -108,6 +124,8 @@ if libheif_module
+@@ -157,6 +173,8 @@ if libheif_module
      shared_module('vips-heif',
          'module/heif.c',
          heif_module_sources,
@@ -53,7 +53,7 @@ index 1111111..2222222 100644
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libheif_dep],
-@@ -120,6 +138,8 @@ if libpoppler_module
+@@ -169,6 +187,8 @@ if libpoppler_module
      shared_module('vips-poppler',
          'module/poppler.c',
          poppler_module_sources,
@@ -62,7 +62,7 @@ index 1111111..2222222 100644
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libpoppler_dep, cairo_dep],
-@@ -132,6 +152,8 @@ if openslide_module
+@@ -181,6 +201,8 @@ if openslide_module
      shared_module('vips-openslide',
          'module/openslide.c',
          openslide_module_sources,
@@ -83,7 +83,7 @@ diff --git a/libvips/meson.build b/libvips/meson.build
 index 1111111..2222222 100644
 --- a/libvips/meson.build
 +++ b/libvips/meson.build
-@@ -101,6 +101,7 @@ if magick_module
+@@ -150,6 +150,7 @@ if magick_module
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, magick_dep],
@@ -91,7 +91,7 @@ index 1111111..2222222 100644
          install: true,
          install_dir: module_dir
      )
-@@ -115,6 +116,7 @@ if libjxl_module
+@@ -164,6 +165,7 @@ if libjxl_module
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libjxl_dep, libjxl_threads_dep],
@@ -99,7 +99,7 @@ index 1111111..2222222 100644
          install: true,
          install_dir: module_dir
      )
-@@ -129,6 +131,7 @@ if libheif_module
+@@ -178,6 +180,7 @@ if libheif_module
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libheif_dep],
@@ -107,7 +107,7 @@ index 1111111..2222222 100644
          install: true,
          install_dir: module_dir
      )
-@@ -143,6 +146,7 @@ if libpoppler_module
+@@ -192,6 +195,7 @@ if libpoppler_module
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, libpoppler_dep, cairo_dep],
@@ -115,7 +115,7 @@ index 1111111..2222222 100644
          install: true,
          install_dir: module_dir
      )
-@@ -157,6 +161,7 @@ if openslide_module
+@@ -206,6 +210,7 @@ if openslide_module
          name_prefix: '',
          name_suffix: module_suffix,
          dependencies: [libvips_dep, openslide_dep],
@@ -138,7 +138,7 @@ diff --git a/libvips/meson.build b/libvips/meson.build
 index 1111111..2222222 100644
 --- a/libvips/meson.build
 +++ b/libvips/meson.build
-@@ -30,8 +30,7 @@ libvips_lib = library('vips',
+@@ -79,8 +79,7 @@ libvips_lib = library('vips',
  )
  
  libvips_dep = declare_dependency(
@@ -148,7 +148,7 @@ index 1111111..2222222 100644
  )
  
  pkg.generate(
-@@ -100,7 +99,7 @@ if magick_module
+@@ -149,7 +148,7 @@ if magick_module
          link_args: module_link_args,
          name_prefix: '',
          name_suffix: module_suffix,
@@ -157,7 +157,7 @@ index 1111111..2222222 100644
          gnu_symbol_visibility: 'hidden',
          install: true,
          install_dir: module_dir
-@@ -115,7 +114,7 @@ if libjxl_module
+@@ -164,7 +163,7 @@ if libjxl_module
          link_args: module_link_args,
          name_prefix: '',
          name_suffix: module_suffix,
@@ -166,7 +166,7 @@ index 1111111..2222222 100644
          gnu_symbol_visibility: 'hidden',
          install: true,
          install_dir: module_dir
-@@ -130,7 +129,7 @@ if libheif_module
+@@ -179,7 +178,7 @@ if libheif_module
          link_args: module_link_args,
          name_prefix: '',
          name_suffix: module_suffix,
@@ -175,7 +175,7 @@ index 1111111..2222222 100644
          gnu_symbol_visibility: 'hidden',
          install: true,
          install_dir: module_dir
-@@ -145,7 +144,7 @@ if libpoppler_module
+@@ -194,7 +193,7 @@ if libpoppler_module
          link_args: module_link_args,
          name_prefix: '',
          name_suffix: module_suffix,
@@ -184,7 +184,7 @@ index 1111111..2222222 100644
          gnu_symbol_visibility: 'hidden',
          install: true,
          install_dir: module_dir
-@@ -160,7 +159,7 @@ if openslide_module
+@@ -209,7 +208,7 @@ if openslide_module
          link_args: module_link_args,
          name_prefix: '',
          name_suffix: module_suffix,
@@ -205,7 +205,7 @@ diff --git a/libvips/iofuncs/init.c b/libvips/iofuncs/init.c
 index 1111111..2222222 100644
 --- a/libvips/iofuncs/init.c
 +++ b/libvips/iofuncs/init.c
-@@ -311,6 +311,43 @@ vips_load_plugins( const char *fmt, ... )
+@@ -312,6 +312,43 @@ vips_load_plugins( const char *fmt, ... )
  
  	return( result );
  }
@@ -249,7 +249,7 @@ index 1111111..2222222 100644
  #endif /*ENABLE_MODULES*/
  
  /* Install this log handler to hide warning messages.
-@@ -600,6 +637,11 @@ vips_init( const char *argv0 )
+@@ -601,6 +638,11 @@ vips_init( const char *argv0 )
  	vips_g_input_stream_get_type(); 
  
  #ifdef ENABLE_MODULES
@@ -261,7 +261,7 @@ index 1111111..2222222 100644
  	/* Load any vips8 modules from the vips libdir. Keep going, even if
  	 * some modules fail to load. 
  	 *
-@@ -609,6 +651,7 @@ vips_init( const char *argv0 )
+@@ -610,6 +652,7 @@ vips_init( const char *argv0 )
  	 */
  	(void) vips_load_plugins( "%s/vips-modules-%d.%d", 
  		libdir, VIPS_MAJOR_VERSION, VIPS_MINOR_VERSION );

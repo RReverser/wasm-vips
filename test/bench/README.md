@@ -8,8 +8,8 @@ https://sharp.pixelplumbing.com/performance
 ## Test environment
 
 * Intel Core i5-8600K CPU 3.60GHz (Coffee Lake), 1 CPU, 6 logical and 6 physical cores
-* Fedora 35
-* Node v16.13.1
+* Fedora 36
+* Node v18.6.0
 
 ## Test images
 
@@ -36,7 +36,7 @@ images. For PNG images a zlib compression level of 6 is used.
 | squoosh-cli        | JPEG   | file   | file   |    1.50 |      1.5 |
 | squoosh-lib        | JPEG   | buffer | buffer |    2.49 |      2.5 |
 | mapnik             | JPEG   | buffer | buffer |    4.20 |      4.2 |
-| wasm-vips          | JPEG   | buffer | buffer |    6.23 |      6.3 |
+| wasm-vips          | JPEG   | buffer | buffer |   10.40 |     10.5 |
 | imagemagick        | JPEG   | file   | file   |   12.18 |     12.3 |
 | gm                 | JPEG   | file   | file   |   12.88 |     13.0 |
 | sharp (w/o liborc) | JPEG   | stream | stream |   38.29 |     38.7 |
@@ -47,8 +47,8 @@ images. For PNG images a zlib compression level of 6 is used.
 | sharp              | JPEG   | buffer | buffer |   43.38 |     43.8 |
 |                    |        |        |        |         |          |
 | jimp               | PNG    | buffer | buffer |    5.43 |      1.0 |
-| wasm-vips          | PNG    | buffer | buffer |    5.61 |      1.0 |
 | mapnik             | PNG    | buffer | buffer |    6.76 |      1.2 |
+| wasm-vips          | PNG    | buffer | buffer |    6.92 |      1.3 |
 | gm                 | PNG    | file   | file   |    8.94 |      1.6 |
 | imagemagick        | PNG    | file   | file   |    9.15 |      1.7 |
 | sharp (w/o liborc) | PNG    | file   | file   |   23.52 |      4.3 |
@@ -56,7 +56,7 @@ images. For PNG images a zlib compression level of 6 is used.
 | sharp (w/o liborc) | PNG    | buffer | buffer |   23.93 |      4.4 |
 | sharp              | PNG    | buffer | buffer |   23.93 |      4.4 |
 |                    |        |        |        |         |          |
-| wasm-vips          | WebP   | buffer | buffer |   11.15 |      1.0 |
+| wasm-vips          | WebP   | buffer | buffer |   11.61 |      1.0 |
 | sharp (w/o liborc) | WebP   | file   | file   |   12.39 |      1.1 |
 | sharp (w/o liborc) | WebP   | buffer | buffer |   12.47 |      1.1 |
 | sharp              | WebP   | file   | file   |   12.55 |      1.1 |
