@@ -134,7 +134,7 @@ VERSION_GLIB=2.74.0         # https://gitlab.gnome.org/GNOME/glib
 VERSION_EXPAT=2.4.8         # https://github.com/libexpat/libexpat
 VERSION_EXIF=0.6.24         # https://github.com/libexif/libexif
 VERSION_LCMS2=2.13.1        # https://github.com/mm2/Little-CMS
-VERSION_HWY=1.0.1           # https://github.com/google/highway
+VERSION_HWY=b7af869         # https://github.com/google/highway
 VERSION_BROTLI=f4153a       # https://github.com/google/brotli
 VERSION_JPEG=4.1.1          # https://github.com/mozilla/mozjpeg
 VERSION_JXL=0.7rc           # https://github.com/libjxl/libjxl
@@ -143,7 +143,7 @@ VERSION_IMAGEQUANT=2.4.1    # https://github.com/lovell/libimagequant
 VERSION_CGIF=0.3.0          # https://github.com/dloebl/cgif
 VERSION_WEBP=1.2.4          # https://chromium.googlesource.com/webm/libwebp
 VERSION_TIFF=4.4.0          # https://gitlab.com/libtiff/libtiff
-VERSION_VIPS=ed67262        # https://github.com/libvips/libvips
+VERSION_VIPS=a08de90        # https://github.com/libvips/libvips
 
 # Remove patch version component
 without_patch() {
@@ -279,7 +279,7 @@ echo "Compiling hwy"
 echo "============================================="
 test -f "$TARGET/lib/pkgconfig/libhwy.pc" || (
   mkdir $DEPS/hwy
-  curl -Ls https://github.com/google/highway/archive/refs/tags/$VERSION_HWY.tar.gz | tar xzC $DEPS/hwy --strip-components=1
+  curl -Ls https://github.com/google/highway/archive/$VERSION_HWY.tar.gz | tar xzC $DEPS/hwy --strip-components=1
   cd $DEPS/hwy
   emcmake cmake -B_build -H. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$TARGET -DBUILD_SHARED_LIBS=FALSE \
     -DBUILD_TESTING=FALSE -DHWY_ENABLE_CONTRIB=FALSE -DHWY_ENABLE_EXAMPLES=FALSE
@@ -332,7 +332,9 @@ test -f "$TARGET/lib/pkgconfig/libjxl.pc" || (
     -DJPEGXL_ENABLE_MANPAGES=FALSE -DJPEGXL_ENABLE_EXAMPLES=FALSE -DJPEGXL_ENABLE_SJPEG=FALSE -DJPEGXL_ENABLE_SKCMS=FALSE \
     -DJPEGXL_BUNDLE_LIBPNG=FALSE -DJPEGXL_FORCE_SYSTEM_BROTLI=TRUE -DJPEGXL_FORCE_SYSTEM_LCMS2=TRUE -DJPEGXL_FORCE_SYSTEM_HWY=TRUE
   make -C _build install
-  # Ensure we don't link with lcms2 in the vips-jxl side module
+  # Ensure we don't link with highway in the vips-jxl side module
+  [ -n "$ENABLE_SIMD" ] && [ -n "$ENABLE_MODULES" ] && sed -i '/^Requires.private:/s/ libhwy//' $TARGET/lib/pkgconfig/libjxl.pc
+  # ... and the same for lcms2
   sed -i '/^Requires.private:/s/ lcms2//' $TARGET/lib/pkgconfig/libjxl.pc
   # Ensure the vips-jxl side module links against the private dependencies
   sed -i 's/Requires.private/Requires/' $TARGET/lib/pkgconfig/libjxl.pc
@@ -431,7 +433,7 @@ test -f "$TARGET/lib/pkgconfig/vips.pc" || (
     -Ddeprecated=false -Dexamples=false -Dintrospection=false -Dauto_features=disabled ${ENABLE_MODULES:+-Dmodules=enabled} \
     -Dcgif=enabled -Dexif=enabled -Dimagequant=enabled -Djpeg=enabled -Djpeg-xl{,-module}=enabled -Dlcms=enabled \
     -Dspng=enabled -Dtiff=enabled -Dwebp=enabled -Dnsgif=true -Dppm=true -Danalyze=true -Dradiance=true \
-    -Davx2=false ${DISABLE_SIMD:+-Dsse41=false}
+    ${ENABLE_SIMD:+-Dhighway=enabled}
   # TODO(kleisauke): Use --tag runtime,devel - see: https://github.com/mesonbuild/meson/pull/10826
   meson install -C _build
   # Emscripten requires linking to side modules to find the necessary symbols to export
