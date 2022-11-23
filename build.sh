@@ -107,11 +107,11 @@ if [ "$PIC" = "true" ]; then PIC_FLAG=--pic; fi
 #export LDFLAGS+=" --source-map-base http://localhost:3000/lib/"
 
 # Common compiler flags
-COMMON_FLAGS="-O3 -pthread"
+COMMON_FLAGS="-O3 -g2 -pthread"
 if [ "$LTO" = "true" ]; then COMMON_FLAGS+=" -flto"; fi
 if [ "$WASM_EH" = "true" ]; then COMMON_FLAGS+=" -sSUPPORT_LONGJMP=wasm"; fi
 
-export CFLAGS="$COMMON_FLAGS -fno-rtti -fno-exceptions -mnontrapping-fptoint"
+export CFLAGS="$COMMON_FLAGS -fno-rtti -mnontrapping-fptoint"
 if [ "$SIMD" = "true" ]; then export CFLAGS+=" -msimd128 -DWASM_SIMD_COMPAT_SLOW"; fi
 if [ "$WASM_BIGINT" = "true" ]; then
   # libffi needs to detect WASM_BIGINT support at compile time
@@ -122,7 +122,7 @@ if [ "$PIC" = "true" ]; then export CFLAGS+=" -fPIC"; fi
 
 export CXXFLAGS="$CFLAGS"
 
-export LDFLAGS="$COMMON_FLAGS -L$TARGET/lib"
+export LDFLAGS="$COMMON_FLAGS -sAUTO_JS_LIBRARIES=0 -sAUTO_NATIVE_LIBRARIES=0 -L$TARGET/lib"
 if [ "$WASM_BIGINT" = "true" ]; then export LDFLAGS+=" -sWASM_BIGINT"; fi
 if [ "$WASM_FS" = "true" ]; then export LDFLAGS+=" -sWASMFS"; fi
 
