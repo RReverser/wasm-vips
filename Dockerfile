@@ -22,3 +22,5 @@ RUN apt-get update \
   && pip3 install git+https://github.com/kleisauke/meson@wasm-vips \
   # Prefer the default system-installed version of Node.js
   && echo "NODE_JS = '$(which node)'" >> $EMSDK/.emscripten
+
+ENV EM_CACHE=/src/build/deps/emcache
