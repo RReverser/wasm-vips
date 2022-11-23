@@ -176,22 +176,6 @@ stage "Set-up environment"
 emcc --version
 node --version
 
-cd $(dirname $(which emcc))
-
-# Assumes that the patches have already been applied when not running in a container
-if [ "$RUNNING_IN_CONTAINER" = true ]; then
-  # TODO(kleisauke): Discuss these patches upstream
-  curl -Ls https://github.com/emscripten-core/emscripten/compare/3.1.26...kleisauke:wasm-vips-3.1.26.patch | patch -p1
-
-  # The system headers require to be reinstalled, as some of
-  # them have been changed with the patches above
-  embuilder.py build sysroot --force
-
-  # Need to rebuild libembind, libc, and libwasmfs, since we
-  # also modified it with the patches above
-  embuilder.py build libembind libc-mt{,-debug} libwasmfs-mt{,-debug} --force $LTO_FLAG $PIC_FLAG
-fi
-
 [ -f "$TARGET/lib/pkgconfig/zlib.pc" ] || (
   stage "Compiling zlib-ng"
   mkdir $DEPS/zlib-ng
