@@ -381,8 +381,9 @@ node --version
   cd $DEPS/vips
   # Emscripten specific patches
   curl -Ls https://github.com/libvips/libvips/compare/$VERSION_VIPS...kleisauke:wasm-vips-master.patch | patch -p1
+  curl -Ls https://github.com/kleisauke/libvips/compare/wasm-vips-master...RReverser:wasm-vips.patch | patch -p1
   # Disable building C++ bindings
-  sed -i "/subdir('cplusplus')/d" meson.build
+  # sed -i "/subdir('cplusplus')/d" meson.build
   # ... and man pages, gettext po files, tools, and (fuzz-)tests
   sed -i "/subdir('man')/{N;N;N;N;d;}" meson.build
   meson setup _build --prefix=$TARGET --cross-file=$MESON_CROSS --default-library=static --buildtype=release \
