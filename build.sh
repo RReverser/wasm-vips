@@ -449,7 +449,9 @@ fi
     sed -i "$expression" $SOURCE_DIR/lib/$file
   done
 
-  # Copy dynamic loadable modules
-  module_dir=$(printf '%s\n' $TARGET/lib/vips-modules-* | sort -n | tail -1)
-  [ -d "$module_dir" ] && cp $module_dir/* $SOURCE_DIR/lib/
+  if [ -n "$ENABLE_MODULES" ]; then
+    # Copy dynamic loadable modules
+    module_dir=$(printf '%s\n' $TARGET/lib/vips-modules-* | sort -n | tail -1)
+    [ -d "$module_dir" ] && cp $module_dir/* $SOURCE_DIR/lib/
+  fi
 )
