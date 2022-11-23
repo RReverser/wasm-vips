@@ -13,8 +13,8 @@ SOURCE_DIR=$PWD
 # and ensures that dependencies are not being rebuilt
 DEPS=$SOURCE_DIR/build/deps
 TARGET=$SOURCE_DIR/build/target
-rm -rf $DEPS/
-mkdir $DEPS
+# rm -rf $DEPS/
+mkdir -p $DEPS
 mkdir -p $TARGET
 
 # Define default arguments
@@ -107,7 +107,7 @@ if [ "$PIC" = "true" ]; then PIC_FLAG=--pic; fi
 #export LDFLAGS+=" --source-map-base http://localhost:3000/lib/"
 
 # Common compiler flags
-COMMON_FLAGS="-O3 -g2 -pthread"
+COMMON_FLAGS="-O1 -g2 -pthread"
 if [ "$LTO" = "true" ]; then COMMON_FLAGS+=" -flto"; fi
 if [ "$WASM_EH" = "true" ]; then COMMON_FLAGS+=" -sSUPPORT_LONGJMP=wasm"; fi
 
@@ -381,7 +381,8 @@ node --version
   cd $DEPS/vips
   # Emscripten specific patches
   curl -Ls https://github.com/libvips/libvips/compare/$VERSION_VIPS...kleisauke:wasm-vips-master.patch | patch -p1
-  curl -Ls https://github.com/kleisauke/libvips/compare/wasm-vips-master...RReverser:wasm-vips.patch | patch -p1
+  # Add gobject_dep to C++ deps.
+  curl -Ls https://github.com/kleisauke/libvips/commit/573fc9d94f1d5676e94522f1711c334ef0c3d89f.patch | patch -p1
   # Disable building C++ bindings
   # sed -i "/subdir('cplusplus')/d" meson.build
   # ... and man pages, gettext po files, tools, and (fuzz-)tests
@@ -397,6 +398,8 @@ node --version
   [ -d "$module_dir" ] && modules=$(find $module_dir/ -type f -printf " %p")
   sed -i "/^Libs:/ s/$/${modules//\//\\/}/" $TARGET/lib/pkgconfig/vips.pc
 )
+
+exit 0 # Don't build bindings
 
 (
   stage "Compiling JS bindings"
